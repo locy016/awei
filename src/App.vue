@@ -1,15 +1,23 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <div>
-      <p>
-        If iView is successfully added to this project, you'll see an
-        <code v-text="'<Button>'"></code>
-        below
-      </p>
-      <van-button type="primary">Button</van-button>
+    <van-nav-bar title="光阴" @click-right="onClickRight">
+      <van-icon name="like-o" slot="right" />
+    </van-nav-bar>
+    <div id="content">
+      <router-view/>
     </div>
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <van-tabbar v-model="active">
+      <van-tabbar-item icon="home-o">
+        <router-link to="/" tag="div">
+          首页
+        </router-link>
+      </van-tabbar-item>
+      <van-tabbar-item icon="more-o">
+        <router-link to="About" tag="div">
+          关于
+        </router-link>
+      </van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 
@@ -17,8 +25,18 @@
 import HelloWorld from '@/components/HelloWorld.vue'
 export default {
   name: 'app',
+  data(){
+    return{
+      active: 0
+    }
+  },
   components: {
     HelloWorld
+  },
+  methods:{
+    onClickRight(){
+      this.$toast('软件开发中,更多功能会尽快为您呈现')
+    }
   }
 }
 </script>
@@ -30,6 +48,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 0;
 }
 </style>
