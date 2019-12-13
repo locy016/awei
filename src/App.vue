@@ -1,44 +1,52 @@
 <template>
   <div id="app">
-    <van-nav-bar title="光阴" @click-right="onClickRight">
-      <van-icon name="like-o" slot="right" />
+    <van-nav-bar title="今日生活" v-if="$route.meta.headshow">
+      <template slot="right">
+        <span
+          v-if="$store.getters.getCity"
+          @click="$toast('当前位置信息')"
+        >{{$store.getters.getCity.city}}</span>
+        <van-icon v-else name="aim" />
+      </template>
     </van-nav-bar>
-    <div id="content">
-      <router-view/>
-    </div>
+    <router-view />
     <van-tabbar v-model="active">
-      <van-tabbar-item icon="home-o">
-        <router-link to="/" tag="div">
-          首页
-        </router-link>
-      </van-tabbar-item>
-      <van-tabbar-item icon="more-o">
-        <router-link to="About" tag="div">
-          关于
-        </router-link>
-      </van-tabbar-item>
+      <router-link to="/" tag="van-tabbar-item">生活</router-link>
+      <router-link to="/toxic" tag="van-tabbar-item">有毒</router-link>
+      <router-link to="/dfof" tag="van-tabbar-item">签诗</router-link>
     </van-tabbar>
   </div>
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld.vue'
 export default {
-  name: 'app',
-  data(){
-    return{
-      active: 0
+  data() {
+    return { active: -1 };
+  },
+  watch: {
+    $route(to, from) {
+      switch (to.name) {
+        case "main":
+          this.active = 0;
+          break;
+        case "toxic":
+          this.active = 1;
+          break;
+        case "dfof":
+          this.active = 2;
+          break;
+        default:
+          this.active = -1;
+          break;
+      }
     }
   },
-  components: {
-    HelloWorld
-  },
-  methods:{
-    onClickRight(){
-      this.$toast('软件开发中,更多功能会尽快为您呈现')
-    }
+  mounted() {
+    console.log(this.$route.name);
+    // 将所有 Toast 的展示时长设置为 2000 毫秒
+    this.$toast.setDefaultOptions({ duration: 500 });
   }
-}
+};
 </script>
 
 <style>

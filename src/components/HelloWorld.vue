@@ -1,9 +1,9 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <small>
-      时不可及，日不可留
-    </small>
+    <!-- <h1>{{ msg }}</h1> -->
+    <van-divider>
+      时钟记录光阴的脚步,又被光阴轻轻的掩盖
+    </van-divider>
   </div>
 </template>
 

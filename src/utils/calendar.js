@@ -1,8 +1,74 @@
 export default {
     install(Vue) {
-        /**
-        * 农历
-        */
+        /* 格式化日期 */
+        Vue.prototype.GetFormatDate = (date) => {
+            var currDate = date || new Date()
+            var year = currDate.getFullYear();
+            var month = ((currDate.getMonth() + 1).toString().length > 1) ? currDate.getMonth() + 1 : "0" + (currDate.getMonth() + 1)
+            var day = (currDate.getDate().toString().length > 1) ? currDate.getDate() : "0" + currDate.getDate()
+            return year + "年" + month + "月" + day + "日";
+        }
+        /* 格式化年份 */
+        Vue.prototype.GetFormatYear = () => {
+            var currDate = new Date()
+            var year = currDate.getFullYear();
+            return year
+        }
+        /* 格式化月份 */
+        Vue.prototype.GetFormatMonth = () => {
+            var currDate = new Date()
+            var month = ((currDate.getMonth() + 1).toString().length > 1) ? currDate.getMonth() + 1 : "0" + (currDate.getMonth() + 1)
+            return month
+        }
+        /* 格式化日期 */
+        Vue.prototype.GetFormatDay = () => {
+            var currDate = new Date()
+            var day = (currDate.getDate().toString().length > 1) ? currDate.getDate() : "0" + currDate.getDate()
+            return day
+        }
+        /* 格式化小时 */
+        Vue.prototype.GetFormatHour = () => {
+            var currDate = new Date()
+            var hour = (currDate.getHours().toString().length > 1) ? currDate.getHours() : "0" + currDate.getHours()
+            return hour
+        }
+        /* 格式化分钟 */
+        Vue.prototype.GetFormatMinute = () => {
+            var currDate = new Date()
+            var minute = (currDate.getMinutes().toString().length > 1) ? currDate.getMinutes() : "0" + currDate.getMinutes()
+            return minute
+        }
+        /* 获取秒钟 */
+        Vue.prototype.GetSecond = () => {
+            var currDate = new Date()
+            var second = currDate.getSeconds()
+            return second
+        }
+        Vue.prototype.GetWeek = () => {
+            //定义一个中文星期数组
+            var arr = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六")
+            var myDate = new Date()
+            return arr[myDate.getDay()]
+        }
+        Vue.prototype.GetWeekEnglish = () => {
+            //定义一个英文星期数组
+            var arr = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+            var myDate = new Date()
+            return arr[myDate.getDay()]
+        }
+        Vue.prototype.GetWeekEnglishSimple = () => {
+            //定义一个英文简写星期数组
+            var arr = new Array("Sun.", "Mon.", "Tues.", "Wed.", "Thur.", "Fri.", "Sat.")
+            var myDate = new Date()
+            return arr[myDate.getDay()]
+        }
+        Vue.prototype.GetWeekBabylon = () => {
+            //定义一个古巴比伦星期数组
+            var arr = new Array("太阳神日.", "月亮神日.", "火星神日.", "水星神日.", "木星神日.", "金星神日.", "土星神日.")
+            var myDate = new Date()
+            return arr[myDate.getDay()]
+        }
+        /* 农历 */
         var CalendarData = new Array(100);
         //1900年到2100年
         CalendarData = new Array(
@@ -57,13 +123,20 @@ export default {
                 }
             }
         }
+        Vue.prototype.SolarTerms = () => {
+            /* var solar = [
+                "小寒", "大寒", "立春", "雨水", "惊蛰", "春分", 
+                "清明", "谷雨", "立夏", "小满", "芒种", "夏至", 
+                "小暑","大暑", "立秋", "处暑", "白露", "秋分", 
+                "寒露", "霜降", "立冬", "小雪", "大雪", "冬至" ] */
+        }
         /*戊戌狗年-腊月廿*/
         function GetcDateString() {
             var tmp = "";
-            tmp += HeavenlyStems[(cYear - 4) % 10];
+            /* tmp += HeavenlyStems[(cYear - 4) % 10];
             tmp += EarthlyBranches[(cYear - 4) % 12];
             tmp += LunarCycle[(cYear - 4) % 12];
-            tmp += "年 ";
+            tmp += "年 "; */
             if (cMonth < 1) {
                 tmp += "(闰)";
                 tmp += LunarMon[-cMonth - 1];
@@ -84,6 +157,14 @@ export default {
                 e2c(solarYear, solarMonth, solarDay);
                 return GetcDateString();
             }
+        }
+        Vue.prototype.GetLunarYuar = () => {
+            var tmp = "";
+            tmp += HeavenlyStems[(cYear - 4) % 10];
+            tmp += EarthlyBranches[(cYear - 4) % 12];
+            tmp += LunarCycle[(cYear - 4) % 12];
+            tmp += "年 ";
+            return tmp
         }
         Vue.prototype.GetLunarCalendar = () => {
             var D = new Date();
