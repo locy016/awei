@@ -1,4 +1,6 @@
-# yolo ( you only live once. )
+# yolo 
+
+you only live once.
 
 ## Project setup
 ```
