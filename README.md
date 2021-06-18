@@ -1,6 +1,4 @@
-# yolo 
-
-you only live once.
+# awei
 
 ## Project setup
 ```

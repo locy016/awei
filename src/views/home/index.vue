@@ -1,37 +1,9 @@
 <template>
   <div class="Main">
-    <!-- 天气情况 -->
-    <div class="text-left">
-      <van-collapse v-model="weather.activeNames">
-        <van-collapse-item name="1" icon="volume-o">
-          <template slot="title">
-            <small class="mr-2">实时天气</small>
-            <b class="mr-2">{{weather.lives.weather}}</b>
-            <b>{{weather.lives.temperature}}</b>
-            <small>°C</small>
-            <small
-              class="ml-1"
-            >| 湿度{{weather.lives.humidity}}% | 风向{{weather.lives.winddirection + weather.lives.windpower}}级</small>
-          </template>
-          <div>
-            <van-steps :active="0" active-icon="arrow" inactive-icon="arrow">
-              <van-step v-for="(item,index) in weather.forecasts" :key="index">
-                <!-- 未来天气预测 -->
-                <div class="mt-4 pt-4 text-center">
-                  <p>{{weekToString(index)}}</p>
-                  <p>{{item.dayweather}}</p>
-                  <p>{{item.nighttemp + "~" +item.daytemp + "°C"}}</p>
-                </div>
-              </van-step>
-            </van-steps>
-          </div>
-        </van-collapse-item>
-      </van-collapse>
-    </div>
     <!-- 地图背景 -->
     <div class="backgroundmap">
       <div id="container" style="min-height: 260px;"></div>
-      <!-- 绘制浮动内容 -->
+      <!-- 绘制浮动日期时间内容 -->
       <div class="drawcontent">
         <van-row>
           <van-col span="16">
@@ -62,6 +34,33 @@
             </div>
           </van-col>
         </van-row>
+        <van-collapse v-model="weather.activeNames" :border="false">
+          <van-collapse-item name="1" icon="volume-o">
+            <template slot="title">
+              <span v-if="$store.getters.getCity">{{$store.getters.getCity.city}}</span>
+              <span class="ml-1 mr-2">实时天气</span>
+              <b class="mr-2">{{weather.lives.weather}}</b>
+              <b>{{weather.lives.temperature}}</b>
+              <small>°C</small>
+              <small class="ml-1">| 湿度{{weather.lives.humidity}}% | 风向{{weather.lives.winddirection + weather.lives.windpower}}级</small>
+            </template>
+            <div>
+              <van-steps :active="0" active-icon="arrow" inactive-icon="arrow">
+                <van-step v-for="(item,index) in weather.forecasts" :key="index">
+                  <!-- 未来天气预测 -->
+                  <div class="mt-4 pt-4 text-center">
+                    <p>{{weekToString(index)}}</p>
+                    <p>{{item.dayweather}}</p>
+                    <p>{{item.nighttemp + "~" +item.daytemp + "°C"}}</p>
+                  </div>
+                </van-step>
+              </van-steps>
+            </div>
+          </van-collapse-item>
+        </van-collapse>
+      </div>
+      <div class="copywriting">
+        <h1>Copywriting</h1>
       </div>
     </div>
   </div>
@@ -174,7 +173,7 @@ export default {
 
 <style scoped>
 .backgroundmap {
-  position: relative;
+  position: fixed;
   width: 100%;
   height: 100%;
   z-index: 1;
@@ -190,8 +189,8 @@ export default {
   z-index: 99;
 }
 .backgroundmap .drawcontent {
-  width: 80%;
-  margin: 0 7%;
+  width: 40%;
+  margin: 0 30%;
   padding: 3%;
   border-radius: 1.5rem;
   background-color: rgba(248, 252, 255, 0.5);
@@ -200,6 +199,15 @@ export default {
 }
 .backgroundmap .drawcontent .clock-circle {
   margin: 1rem auto;
+}
+.backgroundmap .copywriting {
+  position:absolute;
+  width: 90%;
+  margin: 0 5%;
+  border-radius: 1.5rem;
+  background-color: rgba(248, 252, 255, 0.5);
+  border: 0px solid rgba(147, 204, 253, 0.95);
+  box-shadow: 1px 1px 3px rgba(148, 142, 187, 0.55);
 }
 .tips {
   width: 85%;
