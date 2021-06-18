@@ -1,4 +1,4 @@
-# awei
+# yolo ( you only live once. )
 
 ## Project setup
 ```
